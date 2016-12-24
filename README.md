@@ -1,6 +1,6 @@
 # Invoke Programs With Choice Options
 
-This is an Emacs module that invokes a command lien program that requires an
+This is an Emacs module that invokes a command line program that requires an
 a string of enumerations as input.  An example is the mnemonic option of the
 [synconf](https://github.com/plandes/synconf) program.  The enumeration of
 choices offered by the command line program are then read as a completing user
