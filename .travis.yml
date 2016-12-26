@@ -1,8 +1,16 @@
 language: emacs-lisp
-sudo: required
+sudo: false
+before_install:
+  - curl -fsSkL https://gist.github.com/rejeep/ebcd57c3af83b049833b/raw > X.sh && source ./x.sh
+  - evm install $EVM_EMACS --use --skip
 env:
-  - EMACS=emacs24
+  - EVM_EMACS=emacs-24.1-travis CL="-l cl-lib-0.5.el"
+  - EVM_EMACS=emacs-24.2-travis CL="-l cl-lib-0.5.el"
+  - EVM_EMACS=emacs-24.3-travis
+  - EVM_EMACS=emacs-24.4-travis
+  - EVM_EMACS=emacs-24.5-travis
 before_script:
-  - make EMACS=${EMACS} elpa
+  - make elpa
 script:
-  - make EMACS=${EMACS} test
+  - emacs --version
+  - make test
