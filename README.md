@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/plandes/choice-program.svg?branch=master)](https://travis-ci.org/plandes/choice-program.svg)
+
 # Invoke Programs With Choice Options
 
 This is an Emacs module that invokes a command line program that requires an
