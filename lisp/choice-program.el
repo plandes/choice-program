@@ -7,7 +7,7 @@
 ;; Maintainer: Paul Landes
 ;; Keywords: exec execution parameter option
 ;; URL: https://github.com/plandes/choice-program
-;; Package-Requires: ((emacs "24.3"))
+;; Package-Requires: ((emacs "24"))
 
 ;; This file is not part of GNU Emacs.
 
