@@ -1,7 +1,7 @@
 ;;; package --- Summary
 ;;; Commentary:
 ;;
-;; Unit tests of choice-programe.el
+;; Unit tests of choice-program.el
 ;;
 ;;; Code:
 
