@@ -29,6 +29,8 @@
 
 ;;; Code:
 
+(require 'cl-lib)
+
 ;;;###autoload
 (defun choice-program-default-prompt (prompt &optional default history)
   "Format a prompt with optional default formatting.
@@ -91,7 +93,7 @@ ADD-PROMPT-DEFAULT-P, if non-nil, munge the prompt using the default notation
 	 (choice-options (if choice-alist-p (mapcar #'car choices) choices))
 	 (sym-list (mapcar #'(lambda (arg)
 			       (list
-				(typecase arg
+				(cl-typecase arg
 				  (string arg)
 				  (t (prin1-to-string arg))
 				  )))
@@ -101,7 +103,7 @@ ADD-PROMPT-DEFAULT-P, if non-nil, munge the prompt using the default notation
 			  (symbol-name initial-contents)
 			initial-contents)))
 	 (def (if default
-		  (typecase default
+		  (cl-typecase default
 		    (nil nil)
 		    (symbol default (symbol-name default))
 		    (string default))))
@@ -117,13 +119,13 @@ ADD-PROMPT-DEFAULT-P, if non-nil, munge the prompt using the default notation
 	  (setq initial "")))
     (if add-prompt-default-p
 	(setq prompt (choice-program-default-prompt prompt def)))
-    (block wh
+    (cl-block wh
       (while t
 	(setq res-str (completing-read prompt sym-list nil
 				       require-match initial
 				       history def))
 	(if (or allow-empty-p (> (length res-str) 0))
-	    (return-from wh)
+	    (cl-return-from wh)
 	  (ding)
 	  (message (substitute-command-keys
 		    "Input required or type `\\[keyboard-quit]' to quit"))
