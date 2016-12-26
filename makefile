@@ -1,5 +1,3 @@
-PROJ_NAME=	choice-program
-
 EMACS ?=	emacs
 EMACSFLAGS =	-L .
 CASK ?=		cask
@@ -13,7 +11,6 @@ all:		package
 
 .PHONY:		info
 info:
-		@echo "project: $(PROJ_NAME)"
 		@echo "version: $(VERSION)"
 
 # patterns
