@@ -1,6 +1,6 @@
 ;;; choice-program.el --- parameter based program
 
-;; Copyright (C) 2015 - 2007 Paul Landes
+;; Copyright (C) 2015 - 2017 Paul Landes
 
 ;; Version: 0.0.1
 ;; Author: Paul Landes
