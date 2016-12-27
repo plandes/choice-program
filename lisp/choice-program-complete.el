@@ -5,7 +5,6 @@
 ;; Author: Paul Landes
 ;; Maintainer: Paul Landes
 ;; Keywords: interacive user input complete utilities
-;; Package-Requires: ((emacs "24") (cl-lib "0.5"))
 
 ;; This file is not part of GNU Emacs.
 
