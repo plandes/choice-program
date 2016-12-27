@@ -19,7 +19,7 @@ info:
 
 # lifecycle
 elpa:
-		$(CASK) install
+		$(CASK) install || true
 		$(CASK) update
 		touch $@
 
