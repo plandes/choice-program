@@ -28,7 +28,7 @@
 
 ;;; Commentary:
 
-;; Run the program in an async buffer with a particular choice, which is
+;; Run a program in an async buffer with a particular choice, which is
 ;; prompted by the user.
 
 ;;; Code:
