@@ -1,4 +1,4 @@
-# Invoke Programs With Choice Options [![MELPA badge][melpa-badge]][melpa-link] [![Travis CI Build Status][travis-badge]][travis-link]
+# Invoke Programs With Choice Options [![MELPA badge][melpa-badge]][melpa-link] [![MELPA stable badge][melpa-stable-badge]][melpa-stable-link] [![Travis CI Build Status][travis-badge]][travis-link]
 
   [melpa-link]: https://melpa.org/#/choice-program
   [melpa-stable-link]: https://stable.melpa.org/#/choice-program
