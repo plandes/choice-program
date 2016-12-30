@@ -1,6 +1,11 @@
-[![Build Status](https://travis-ci.org/plandes/choice-program.svg?branch=master)](https://travis-ci.org/plandes/choice-program.svg)
+# Invoke Programs With Choice Options [![MELPA badge][melpa-badge]][melpa-link] [![Travis CI Build Status][travis-badge]][travis-link]
 
-# Invoke Programs With Choice Options
+  [melpa-link]: https://melpa.org/#/choice-program
+  [melpa-stable-link]: https://stable.melpa.org/#/choice-program
+  [melpa-badge]: https://melpa.org/packages/choice-program-badge.svg
+  [melpa-stable-badge]: https://stable.melpa.org/packages/choice-program-badge.svg
+  [travis-link]: https://travis-ci.org/plandes/choice-program
+  [travis-badge]: https://travis-ci.org/plandes/choice-program.svg?branch=master
 
 This is an Emacs module that invokes a command line program that requires an
 a string of enumerations as input.  An example is the mnemonic option of the
