@@ -2,9 +2,9 @@
 (source gnu)
 (source melpa)
 
-(package-file "lisp/choice-program.el")
+(package-file "choice-program.el")
 
-(files "lisp/*.el" (:exclude ".dir-locals.el"))
+(files "*.el" (:exclude ".dir-locals.el"))
 
 (development
  (depends-on "dash")
