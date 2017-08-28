@@ -98,12 +98,11 @@ documentation.")
 
 (cl-defmethod object-print ((this choice-prog) &optional strings)
   "Return a string as a representation of the in memory instance of THIS."
-  (cl-call-next-method
-   this
-   (cons (format " %s (%s)"
-		 (slot-value this 'program)
-		 (mapconcat #'identity (slot-value this 'selection-args) " "))
-	 strings)))
+  (apply #'cl-call-next-method this
+	 (cons (format " %s (%s)"
+		       (slot-value this 'program)
+		       (mapconcat #'identity (slot-value this 'selection-args) " "))
+	       strings)))
 
 (cl-defmethod choice-prog-debug ((this choice-prog) object)
   (with-current-buffer
@@ -132,7 +131,7 @@ documentation.")
 			       (format "execution output: <%s>" (buffer-string))))
 	(when (not no-trim-p)
 	  (goto-char (point-max))
-	  (if (looking-at "^$")
+	  (if (and (not (bobp)) (looking-at "^$"))
 	      (delete-char -1)))))))
 
 (cl-defmethod choice-prog-selections ((this choice-prog))
