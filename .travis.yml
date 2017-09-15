@@ -14,7 +14,6 @@ before_install:
   - curl -fsSkL https://raw.github.com/cask/cask/master/go | python
   - export PATH=$HOME/.cask/bin:$PATH
   - cask --version
-  - emacs --version
   - cask
 
 env:
@@ -29,5 +28,5 @@ env:
   #- EVM_EMACS=emacs-git-snapshot-travis
 
 script:
-  - make cleanall
+  - emacs --version
   - make test
