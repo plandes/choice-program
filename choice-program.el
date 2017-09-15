@@ -33,6 +33,7 @@
 
 ;;; Code:
 
+(require 'cl-lib)
 (require 'eieio)
 (require 'choice-program-complete)
 
