@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Changed
 - Dependencies and headers to be adhere more to convention.
+- Fixed travis build using old (24.3) Emacs version from cask.
 
 
 [Unreleased]: https://github.com/plandes/choice-program/compare/v0.3...HEAD
