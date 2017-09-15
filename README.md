@@ -46,6 +46,11 @@ interactive function `synconf`).  Then the subsequent call to
 with that which invokes the command line program.
 
 
+## Changelog
+
+An extensive changelog is available [here](CHANGELOG.md).
+
+
 ## License
 
 Copyright © 2017 Paul Landes
