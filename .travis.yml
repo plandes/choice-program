@@ -29,4 +29,4 @@ env:
   #- EVM_EMACS=emacs-git-snapshot-travis
 
 script:
-  - make test
+  - EMACS=$(which emacs) make test

@@ -31,6 +31,7 @@ build:		$(ELPA_FILE) $(OBJECTS)
 
 .PHONY:		test
 test:		build cleantest
+		which emacs
 		$(CASK) exec ert-runner -L $(LISP_DIR)
 
 $(DOC_DIR):
