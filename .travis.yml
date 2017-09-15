@@ -13,6 +13,7 @@ before_install:
   # Use cask to install development dependencies
   - curl -fsSkL https://raw.github.com/cask/cask/master/go | python
   - export PATH=$HOME/.cask/bin:$PATH
+  - emacs --version
   - cask --version
   - cask
 
@@ -28,5 +29,4 @@ env:
   #- EVM_EMACS=emacs-git-snapshot-travis
 
 script:
-  - emacs --version
   - make test
