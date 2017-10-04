@@ -7,6 +7,15 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [0.4] - 2017-10-04
+### Changed
+- Name of the program instance is given in the class constructor instead of
+  `choice-prog-create-exec-function`.
+  
+### Added
+- Get all registered program instances with `choice-prog-instances`.
+
+
 ## [0.3] - 2017-09-15
 ### Added
 - Changelog
@@ -16,5 +25,6 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Fixed travis build using old (24.3) Emacs version from cask.
 
 
-[Unreleased]: https://github.com/plandes/choice-program/compare/v0.3...HEAD
+[Unreleased]: https://github.com/plandes/choice-program/compare/v0.4...HEAD
+[0.4]: https://github.com/plandes/choice-program/compare/v0.3...v0.4
 [0.3]: https://github.com/plandes/choice-program/compare/v0.2...v0.3

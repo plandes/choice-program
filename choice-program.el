@@ -2,7 +2,7 @@
 
 ;; Copyright (C) 2015 - 2017 Paul Landes
 
-;; Version: 0.3
+;; Version: 0.4
 ;; Author: Paul Landes
 ;; Maintainer: Paul Landes
 ;; Keywords: exec execution parameter option
@@ -39,15 +39,22 @@
 (defvar choice-prog-exec-debug-p nil
   "*If non-nil, output debuging to buffer *Option Prog Debug*.")
 
+(defvar choice-prog-instance-syms nil
+  "A list of choice-prog instance variables.")
+
 (defgroup choice-prog nil
   "Parameter choice driven program execution."
   :group 'choice-prog
   :prefix "choice-prog-")
 
 (defclass choice-prog ()
-  ((program :initarg :program
-	    :type string
-	    :documentation "The conduit program to run.")
+  ((name :initarg :name
+	 :initform nil
+	 :type (or null string)
+	 :documentation "Name of the choice program launcher.")
+   (program :initarg :program
+	       :type string
+	       :documentation "The conduit program to run.")
    (interpreter :initarg :interpreter
 		:type (or null string)
 		:documentation "The interpreter (i.e. /bin/sh) or nil.")
@@ -65,13 +72,13 @@
 		       :documentation "Name of the parameter switch \
 \(i.e. -m).")
    (dryrun-switch-name :initarg :dryrun-switch-name
-		       :initform "-n"
+		       :initform "-d"
 		       :type string
 		       :documentation "Name of the switch given to the \
 program execute a dry run (defaults to -n).")
    (verbose-switch-form :initarg :verbose-switch-form
-			:initform "-s"
-			:type string
+			:initform nil
+			:type (or null string)
 			:documentation "Switch and/or parameter given to the \
 program to produce verbose output.")
    (buffer-name :initarg :buffer-name
@@ -104,6 +111,11 @@ documentation.")
 		       (mapconcat #'identity (slot-value this 'selection-args) " "))
 	       strings)))
 
+(cl-defmethod choice-prog-name ((this choice-prog))
+  "Return the name of the choice program launcher."
+  (with-slots (name program) this
+    (or name program)))
+
 (cl-defmethod choice-prog-debug ((this choice-prog) object)
   (with-current-buffer
       (get-buffer-create "*Option Prog Debug*")
@@ -135,7 +147,7 @@ documentation.")
 	      (delete-char -1)))))))
 
 (cl-defmethod choice-prog-selections ((this choice-prog))
-  "Return a list of possibilities for mnemonics for this host."
+  "Return a list of possibilities for mnemonics for this program."
   (let ((output (choice-prog-exec-prog this (slot-value this 'selection-args))))
     (split-string output "\n")))
 
@@ -182,19 +194,24 @@ the `choice-prog-create-exec-function' method."
 		       #'(lambda (mode)
 			   (slot-value this 'buffer-name)))))
 
-(defun choice-prog-create-exec-function (instance-var &optional name)
+(defun choice-prog-instances ()
+  "Return all `choice-prog' instances."
+  (mapcar #'symbol-value
+	  choice-prog-instance-syms))
+
+(defun choice-prog-create-exec-function (instance-var)
   "Create functions for a `choice-prog' instance.
 INSTANCE-VAR is an instance of the `choice-prog' eieio class.
 NAME overrides the `:program' slot if given."
   (let* ((this (symbol-value instance-var))
+	 (name (intern (choice-prog-name this)))
 	 (option-doc (format "\
 CHOICE is given to the `%s' program with the `%s' option.
 DRYRUN-P, if non-`nil' doesn't execute the command, but instead shows what it
 would do if it were to be run.  This adds the `%s' option to the command line."
-			     (slot-value this 'program)
+			     name
 			     (slot-value this 'choice-switch-name)
 			     (slot-value this 'dryrun-switch-name))))
-    (setq name (or name (intern (slot-value this 'program))))
     (let ((def
 	   `(defun ,name (choice dryrun-p)
 	      ,(if (slot-value this 'documentation)
@@ -202,7 +219,8 @@ would do if it were to be run.  This adds the `%s' option to the command line."
 	      (interactive (list (choice-prog-read-option ,instance-var)
 				 current-prefix-arg))
 	      (choice-prog-exec ,instance-var choice dryrun-p))))
-      (eval def))))
+      (eval def))
+    (add-to-list 'choice-prog-instance-syms instance-var)))
 
 (provide 'choice-program)
 

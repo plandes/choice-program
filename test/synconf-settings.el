@@ -2,7 +2,7 @@
 
 ;;; synconf
 (defvar synconf-the-instance
-  (choice-prog nil
+  (choice-prog :name "synconf"
 	       :program "test-synconf"
 	       :interpreter "/bin/sh"
 	       :buffer-name "*Synchronized Output*"
@@ -16,4 +16,4 @@ perl script.")
 
 ;;;###autoload
 (defun synconf (&optional rest) (interactive))
-(choice-prog-create-exec-function 'synconf-the-instance 'synconf)
+(choice-prog-create-exec-function 'synconf-the-instance)
