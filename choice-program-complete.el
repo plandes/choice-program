@@ -92,11 +92,9 @@ ADD-PROMPT-DEFAULT-P, if non-nil, munge the prompt using the default notation
   (let* ((choice-alist-p (listp (car choices)))
 	 (choice-options (if choice-alist-p (mapcar #'car choices) choices))
 	 (sym-list (mapcar #'(lambda (arg)
-			       (list
-				(cl-typecase arg
-				  (string arg)
-				  (t (prin1-to-string arg))
-				  )))
+			       (cl-typecase arg
+				 (string arg)
+				 (t (prin1-to-string arg))))
 			   choice-options))
 	 (initial (if initial-contents
 		      (if (symbolp initial-contents)

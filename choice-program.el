@@ -162,11 +162,11 @@ documentation.")
 				 (choice-prog-selections this)
 				 t t	; return-as-string require-match
 				 nil	; initial
-				 'prompt-history
+				 'prompt-history ; history
 				 default
 				 nil	; allow-empty-p
 				 nil	; no-initial
-				 t)
+				 t)     ; add-prompt-default
       (oset this :prompt-history prompt-history))))
 
 (cl-defmethod choice-prog-command ((this choice-prog)
