@@ -1,6 +1,6 @@
 ;;; choice-program-complete.el --- utility functions for user input selection
 
-;; Copyright (C) 2015 - 2017 Paul Landes
+;; Copyright (C) 2015 - 2019 Paul Landes
 
 ;; Author: Paul Landes
 ;; Maintainer: Paul Landes
