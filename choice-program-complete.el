@@ -108,7 +108,7 @@ ADD-PROMPT-DEFAULT-P, if non-nil, munge the prompt using the default notation
 	 res-str)
     (when (not no-initial-contents-on-singleton-p)
       (if (and (null initial) (= 1 (length sym-list)))
-	  (setq initial (caar sym-list)))
+	  (setq initial (car sym-list)))
       (if (and (null initial)
 	       ;; cases where a default is given and the user can't then just
 	       ;; press return; instead, the user has to clear the minibuffer
