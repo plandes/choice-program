@@ -170,8 +170,8 @@ HISTORY is the history variable used for the user input."
 				   (car (symbol-value prompt-history))))))
     (choice-program-complete (slot-value this 'choice-prompt)
 			     (choice-prog-selections this)
-			     t t	; return-as-string require-match
-			     nil	; initial
+			     t t	    ; return-as-string require-match
+			     nil	    ; initial
 			     prompt-history ; history
 			     default
 			     nil	; allow-empty-p
@@ -207,7 +207,7 @@ the `choice-prog-create-exec-function' method."
       (if (slot-value this 'display-buffer)
 	  (setq buf (prog-exec))
 	(save-window-excursion
-	    (setq buf (prog-exec)))))
+	  (setq buf (prog-exec)))))
     (message "Started: %s" cmd)
     buf))
 
