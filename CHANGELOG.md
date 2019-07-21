@@ -8,6 +8,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased]
 
 
+## [0.9] - 2019-07-21
+### Changed
+- Sync versions.
+
+### Added
+- Added [zenbuild].
+
+
 ## [0.5] - 2019-06-15
 ### Added
 - Feature to prevent program output from popping up.
@@ -34,7 +42,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Fixed travis build using old (24.3) Emacs version from cask.
 
 
-[Unreleased]: https://github.com/plandes/choice-program/compare/v0.5...HEAD
+[Unreleased]: https://github.com/plandes/choice-program/compare/v0.9...HEAD
+[0.9]: https://github.com/plandes/choice-program/compare/v0.5...v0.9
 [0.5]: https://github.com/plandes/choice-program/compare/v0.4...v0.5
 [0.4]: https://github.com/plandes/choice-program/compare/v0.3...v0.4
 [0.3]: https://github.com/plandes/choice-program/compare/v0.2...v0.3
+
+<!-- links -->
+[zenbuild]: https://github.com/plandes/zenbuild

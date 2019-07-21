@@ -2,7 +2,7 @@
 
 ;; Copyright (C) 2015 - 2019 Paul Landes
 
-;; Version: 0.5
+;; Version: 0.9
 ;; Author: Paul Landes
 ;; Maintainer: Paul Landes
 ;; Keywords: exec execution parameter option
