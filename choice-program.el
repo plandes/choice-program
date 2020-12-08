@@ -53,8 +53,8 @@
 	 :type (or null string)
 	 :documentation "Name of the choice program launcher.")
    (program :initarg :program
-	       :type string
-	       :documentation "The conduit program to run.")
+	    :type string
+	    :documentation "The conduit program to run.")
    (interpreter :initarg :interpreter
 		:type (or null string)
 		:documentation "The interpreter (i.e. /bin/sh) or nil.")
