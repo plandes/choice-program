@@ -33,7 +33,6 @@ perl script.")
 
 (let ((dir (concat (file-name-as-directory
 		    (expand-file-name default-directory)) "test")))
-  (message "adding `%s' to `exec-path'" dir)
   (add-to-list 'exec-path dir))
 
 (ert-deftest test-choice-program-selections ()
