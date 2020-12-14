@@ -8,6 +8,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased]
 
 
+## [0.10] - 2020-12-14
+### Changed
+- Rename `choice-prog` class to `choice-program` to make compat with
+  `package-lint`.
+- Fixed tests and cleaned up test code.
+- Switched from Travis GitHub CI actions.
+
+
 ## [0.9] - 2019-07-21
 ### Changed
 - Sync versions.
@@ -42,7 +50,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Fixed travis build using old (24.3) Emacs version from cask.
 
 
-[Unreleased]: https://github.com/plandes/choice-program/compare/v0.9...HEAD
+[Unreleased]: https://github.com/plandes/choice-program/compare/v0.10...HEAD
+[0.10]: https://github.com/plandes/choice-program/compare/v0.9...v0.10
 [0.9]: https://github.com/plandes/choice-program/compare/v0.5...v0.9
 [0.5]: https://github.com/plandes/choice-program/compare/v0.4...v0.5
 [0.4]: https://github.com/plandes/choice-program/compare/v0.3...v0.4

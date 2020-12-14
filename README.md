@@ -3,6 +3,7 @@
 [![MELPA badge][melpa-badge]][melpa-link]
 [![MELPA stable badge][melpa-stable-badge]][melpa-stable-link]
 [![Travis CI Build Status][travis-badge]][travis-link]
+[![Build Status][build-badge]][build-link]
 
 This is an Emacs module that invokes a command line program that requires an a
 string of enumerations as input.  An example is the mnemonic option of the
@@ -64,6 +65,6 @@ GNU Lesser General Public License, Version 2.0
 [melpa-stable-link]: https://stable.melpa.org/#/choice-program
 [melpa-badge]: https://melpa.org/packages/choice-program-badge.svg
 [melpa-stable-badge]: https://stable.melpa.org/packages/choice-program-badge.svg
-[travis-link]: https://travis-ci.org/plandes/choice-program
-[travis-badge]: https://travis-ci.org/plandes/choice-program.svg?branch=master
+[build-badge]: https://github.com/plandes/choice-program/workflows/CI/badge.svg
+[build-link]: https://github.com/plandes/choice-program/actions
 [synconf]: https://github.com/plandes/synconf
