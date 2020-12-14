@@ -6,9 +6,6 @@ on:
     paths-ignore:
     - '**.md'
     - 'doc/*'
-    # Comment out this section to enable testing of all branches.
-    branches:
-      - master
 
 jobs:
   build:
@@ -17,14 +14,24 @@ jobs:
       matrix:
         emacs_version:
           - 27.1
-          - snapshot
     steps:
+    - name: Checkout reposistory
+      uses: actions/checkout@master
+
+    - uses: actions/setup-python@v1.1.1
+      with:
+        python-version: '3.6'
+        architecture: 'x64'
+
     - uses: purcell/setup-emacs@master
       with:
         version: ${{ matrix.emacs_version }}
 
-    - name: Checkout reposistory
-      uses: actions/checkout@master
+    - name: Setup Cask
+    - uses: conao3/setup-cask@master
+      with:
+        version: 'snapshot'
+
     - name: Checkout submodules
       uses: textbook/git-checkout-submodule-action@master
 
