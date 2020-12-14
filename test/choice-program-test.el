@@ -7,15 +7,39 @@
 
 (require 'ert)
 (require 'dash)
+(require 'choice-program)
 
-(load "test/synconf-settings.el")
+;;;###autoload
+(defun synconf (&optional rest)
+  "A no-op function that disards REST."
+  (interactive))
 
-(add-to-list 'exec-path "test")
+;;; synconf
+(defvar synconf-the-instance
+  (choice-program :name "synconf"
+		  :program "test-synconf"
+		  :interpreter "/bin/sh"
+		  :buffer-name "*Synchronized Output*"
+		  :choice-prompt "Mnemonic"
+		  :choice-switch-name "-m"
+		  :selection-args '("-a" "listmnemonics")
+		  :documentation
+"Run a synchronize command.  The command is issued with the `synconf'
+perl script.")
+  "The synconf object instance.")
+
+(choice-program-create-exec-function
+ 'synconf-the-instance)
+
+(let ((dir (concat (file-name-as-directory
+		    (expand-file-name default-directory)) "test")))
+  (message "adding `%s' to `exec-path'" dir)
+  (add-to-list 'exec-path dir))
 
 (ert-deftest test-choice-program-selections ()
   "Validate mnemonic options"
  (->> synconf-the-instance
-      (choice-prog-selections)
+      (choice-program-selections)
       (equal '("laptop" "usb"))
       should))
 
@@ -23,3 +47,7 @@
   "Validate prompt"
   (should (equal "Test (default def): "
 		 (choice-program-default-prompt "Test" "def"))))
+
+(provide 'choice-program-test)
+
+;;; choice-program-test.el ends here
