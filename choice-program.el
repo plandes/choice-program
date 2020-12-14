@@ -1,11 +1,11 @@
 ;;; choice-program.el --- Parameter based program
 
-;; Copyright (C) 2015 - 2019 Paul Landes
+;; Copyright (C) 2015 - 2020 Paul Landes
 
 ;; Version: 0.10
 ;; Author: Paul Landes
 ;; Maintainer: Paul Landes
-;; Keywords: execution convenience unix
+;; Keywords: execution processes unix
 ;; URL: https://github.com/plandes/choice-program
 ;; Package-Requires: ((emacs "26"))
 
