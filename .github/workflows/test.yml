@@ -6,6 +6,9 @@ on:
     paths-ignore:
     - '**.md'
     - 'doc/*'
+    # Comment out this section to enable testing of all branches.
+    branches:
+      - master
 
 jobs:
   build:
@@ -13,18 +16,18 @@ jobs:
     strategy:
       matrix:
         emacs_version:
-          - 26.1
-          - 26.2
-          - 26.3
           - 27.1
           - snapshot
-    env:
-      EMACS_LINT_IGNORE: ${{ matrix.lint_ignore }}
     steps:
     - uses: purcell/setup-emacs@master
       with:
         version: ${{ matrix.emacs_version }}
 
-    - uses: actions/checkout@v2
+    steps:
+    - name: Checkout reposistory
+      uses: actions/checkout@master
+    - name: Checkout submodules
+      uses: textbook/git-checkout-submodule-action@master
+
     - name: Run tests
       run: 'make test'
