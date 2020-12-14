@@ -28,7 +28,7 @@ jobs:
         version: ${{ matrix.emacs_version }}
 
     - name: Setup Cask
-    - uses: conao3/setup-cask@master
+      uses: conao3/setup-cask@master
       with:
         version: 'snapshot'
 
