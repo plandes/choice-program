@@ -12,24 +12,24 @@ program are then read as a completing user input in Emacs.
 
 ## Usage
 
-You must create an instance of the `choice-prog` class and specify the program
+You must create an instance of the `choice-program` class and specify the program
 with options.  For the [synconf] program
 you'd add the following to your `~/.emacs` init file:
 ```elisp
 (defvar synconf-the-instance
-  (choice-prog nil
-	       :program "synconf"
-	       :interpreter "perl"
-	       :buffer-name "*Synchronized Output*"
-	       :choice-prompt "Mnemonic"
-	       :choice-switch-name "-m"
-	       :selection-args '("-a" "listmnemonics")
-	       :documentation
+  (choice-program nil
+                  :program "synconf"
+                  :interpreter "perl"
+                  :buffer-name "*Synchronized Output*"
+                  :choice-prompt "Mnemonic"
+                  :choice-switch-name "-m"
+                  :selection-args '("-a" "listmnemonics")
+                  :documentation
 "Run a synchronize command.  The command is issued with the `synconf'
 perl script.")
   "The synconf object instance.")
 
-(choice-prog-create-exec-function 'synconf-the-instance)
+(choice-program-create-exec-function 'synconf-the-instance)
 ```
 
 If you'd like add the configuration in another config file you can use add the
@@ -37,12 +37,12 @@ following:
 ```elisp
 ;;;###autoload
 (defun synconf (&optional rest) (interactive))
-(choice-prog-create-exec-function 'synconf-the-instance)
+(choice-program-create-exec-function 'synconf-the-instance)
 ```
 
 This adds the configuration file to autoloads (pattern matching on the
 interactive function `synconf`).  Then the subsequent call to
-`choice-prog-create-exec-function` clobbers the empty interactive definition
+`choice-program-create-exec-function` clobbers the empty interactive definition
 with that which invokes the command line program.
 
 
