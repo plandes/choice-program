@@ -23,7 +23,6 @@ jobs:
       with:
         version: ${{ matrix.emacs_version }}
 
-    steps:
     - name: Checkout reposistory
       uses: actions/checkout@master
     - name: Checkout submodules
