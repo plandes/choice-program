@@ -45,7 +45,7 @@ perl script.")
 (ert-deftest test-choice-prompt ()
   "Validate prompt"
   (should (equal "Test (default def): "
-		 (choice-program-default-prompt "Test" "def"))))
+		 (choice-program-complete-default-prompt "Test" "def"))))
 
 (provide 'choice-program-test)
 

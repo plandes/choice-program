@@ -1,10 +1,13 @@
-;;; choice-program-complete.el --- utility functions for user input selection
+;;; choice-program-complete.el --- Utility functions for user input selection
 
-;; Copyright (C) 2015 - 2019 Paul Landes
+;; Copyright (C) 2015 - 2020 Paul Landes
 
 ;; Author: Paul Landes
 ;; Maintainer: Paul Landes
-;; Keywords: interacive user input complete utilities
+;; Keywords: internal convenience
+;; URL: https://github.com/plandes/choice-program
+;; Package-Version: 0
+;; Package-Requires: ((emacs "26"))
 
 ;; This file is not part of GNU Emacs.
 
@@ -32,7 +35,8 @@
 (require 'cl-lib)
 
 ;;;###autoload
-(defun choice-program-default-prompt (prompt &optional default history)
+(defun choice-program-complete-default-prompt (prompt &optional
+						      default history)
   "Format a prompt with optional default formatting.
 PROMPT is the text used in the header minibuffer.
 DEFAULT is the default input if given.
@@ -116,7 +120,7 @@ ADD-PROMPT-DEFAULT-P, if non-nil, munge the prompt using the default notation
 	       (null def))
 	  (setq initial "")))
     (if add-prompt-default-p
-	(setq prompt (choice-program-default-prompt prompt def)))
+	(setq prompt (choice-program-complete-default-prompt prompt def)))
     (cl-block wh
       (while t
 	(setq res-str (completing-read prompt sym-list nil

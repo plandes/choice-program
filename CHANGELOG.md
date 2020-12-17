@@ -8,6 +8,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased]
 
 
+## [0.12] - 2020-12-16
+
+### Changed
+- Documentation: *package-lint* warning fixes.
+
+
 ## [0.11] - 2020-12-16
 This release addresses the following error:
 ```
@@ -67,7 +73,8 @@ This release addresses the following error:
 - Fixed travis build using old (24.3) Emacs version from cask.
 
 
-[Unreleased]: https://github.com/plandes/choice-program/compare/v0.11...HEAD
+[Unreleased]: https://github.com/plandes/choice-program/compare/v0.12...HEAD
+[0.12]: https://github.com/plandes/choice-program/compare/v0.11...v0.12
 [0.11]: https://github.com/plandes/choice-program/compare/v0.10...v0.11
 [0.10]: https://github.com/plandes/choice-program/compare/v0.9...v0.10
 [0.9]: https://github.com/plandes/choice-program/compare/v0.5...v0.9
