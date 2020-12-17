@@ -16,7 +16,7 @@
 
 ;;; synconf
 (defvar synconf-the-instance
-  (choice-program :name "synconf"
+  (choice-program :object-name "synconf"
 		  :program "test-synconf"
 		  :interpreter "/bin/sh"
 		  :buffer-name "*Synchronized Output*"

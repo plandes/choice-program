@@ -8,6 +8,23 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased]
 
 
+## [0.11] - 2020-12-16
+This release addresses the following error:
+```
+`object-print' is an obsolete generic function (as of 26.1); use `cl-print-object' instead.
+```
+
+### Changed
+- Remove slot `:name` from `choice-program` and extend from `eieio-named`,
+  which is now the (changed) convention.
+- Replace `object-print` with `eieio-named` class's method
+  `eieio-object-name-string`.
+
+### Removed
+- Removed methods `object-print` and `object-format`.
+
+
+
 ## [0.10] - 2020-12-14
 ### Changed
 - Rename `choice-prog` class to `choice-program` to make compat with
@@ -50,7 +67,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Fixed travis build using old (24.3) Emacs version from cask.
 
 
-[Unreleased]: https://github.com/plandes/choice-program/compare/v0.10...HEAD
+[Unreleased]: https://github.com/plandes/choice-program/compare/v0.11...HEAD
+[0.11]: https://github.com/plandes/choice-program/compare/v0.10...v0.11
 [0.10]: https://github.com/plandes/choice-program/compare/v0.9...v0.10
 [0.9]: https://github.com/plandes/choice-program/compare/v0.5...v0.9
 [0.5]: https://github.com/plandes/choice-program/compare/v0.4...v0.5

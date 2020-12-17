@@ -33,7 +33,9 @@
 
 ;;; Code:
 
+(require 'dash)
 (require 'eieio)
+(require 'eieio-base)
 (require 'choice-program-complete)
 
 (defvar choice-program-exec-debug-p nil
@@ -47,12 +49,8 @@
   :group 'choice-program
   :prefix "choice-program-")
 
-(defclass choice-program ()
-  ((name :initarg :name
-	 :initform nil
-	 :type (or null string)
-	 :documentation "Name of the choice program launcher.")
-   (program :initarg :program
+(defclass choice-program (eieio-named)
+  ((program :initarg :program
 	    :type string
 	    :documentation "The conduit program to run.")
    (interpreter :initarg :interpreter
@@ -104,28 +102,20 @@ documentation.")
 Whether or not to display the buffer on execution."))
   :documentation "Represents a single `actionable' program instance.")
 
-(cl-defmethod initialize-instance ((this choice-program) &optional args)
-  "Initialize instance THIS with arguments ARGS."
-  (if (null (plist-get args :buffer-name))
-      (setq args
-	    (plist-put args :buffer-name
-		       (format "*%s Output*"
-			       (capitalize (slot-value this 'program))))))
-  (cl-call-next-method this args))
-
-(cl-defmethod object-print ((this choice-program) &optional strings)
-  "Return a string as a representation of the in memory instance of THIS.
-STRINGS are the string data to format."
-  (apply #'cl-call-next-method this
-	 (format " %s (%s)"
-		 (slot-value this 'program)
-		 (mapconcat #'identity (slot-value this 'selection-args) " "))
-	 strings))
+(cl-defmethod initialize-instance ((this choice-program) &optional slots)
+  "Initialize instance THIS with arguments SLOTS."
+  (setq slots (plist-put slots :buffer-name
+			 (or (plist-get slots :buffer-name)
+			     (format "*%s Output*"
+				     (capitalize (slot-value this 'program)))))
+	slots (plist-put slots :object-name
+			 (or (plist-get slots :object-name)
+			     (plist-get slots :program))))
+  (cl-call-next-method this slots))
 
 (cl-defmethod choice-program-name ((this choice-program))
   "Return the name of THIS choice program launcher."
-  (with-slots (name program) this
-    (or name program)))
+  (slot-value this 'object-name))
 
 (cl-defmethod choice-program-debug ((this choice-program) object)
   "Add a debugging message for THIS with debug parameter OBJECT."
@@ -134,6 +124,16 @@ STRINGS are the string data to format."
     (goto-char (point-max))
     (insert (format (if (stringp object) "%s" "%S") object))
     (newline)))
+
+(cl-defmethod eieio-object-name-string ((this choice-program))
+  "Return a string as a representation of the in memory instance of THIS."
+  (->> '(selection-args buffer-name)
+       (-map #'(lambda (slot)
+		 (let ((val (slot-value this slot)))
+		   (cond ((stringp val) val)
+			 (t (prin1-to-string val))))))
+       ((lambda (slots) (mapconcat #'prin1-to-string slots " ")))
+       (concat (cl-call-next-method this) " ")))
 
 (cl-defmethod choice-program-exec-prog ((this choice-program) args
 					&optional no-trim-p)
