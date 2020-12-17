@@ -1,13 +1,13 @@
-;;; choice-program.el --- Parameter based program
+;;; choice-program.el --- Parameter based program  -*- lexical-binding: t; -*-
 
 ;; Copyright (C) 2015 - 2020 Paul Landes
 
 ;; Version: 0.10
 ;; Author: Paul Landes
 ;; Maintainer: Paul Landes
-;; Keywords: execution processes unix
+;; Keywords: execution processes unix lisp
 ;; URL: https://github.com/plandes/choice-program
-;; Package-Requires: ((emacs "26"))
+;; Package-Requires: ((emacs "26") (dash "2.13.0"))
 
 ;; This file is not part of GNU Emacs.
 

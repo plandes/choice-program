@@ -1,4 +1,4 @@
-;;; choice-program-complete.el --- Utility functions for user input selection
+;;; choice-program-complete.el --- Utility functions for user input selection  -*- lexical-binding: t; -*-
 
 ;; Copyright (C) 2015 - 2020 Paul Landes
 

@@ -8,6 +8,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased]
 
 
+## [0.13] - 2020-12-16
+### Change
+- Build refactoring only: better package-lint automation.
+
+
 ## [0.12] - 2020-12-16
 
 ### Changed
@@ -75,7 +80,8 @@ This release addresses the following error:
 - Fixed travis build using old (24.3) Emacs version from cask.
 
 
-[Unreleased]: https://github.com/plandes/choice-program/compare/v0.12...HEAD
+[Unreleased]: https://github.com/plandes/choice-program/compare/v0.13...HEAD
+[0.13]: https://github.com/plandes/choice-program/compare/v0.12...v0.13
 [0.12]: https://github.com/plandes/choice-program/compare/v0.11...v0.12
 [0.11]: https://github.com/plandes/choice-program/compare/v0.10...v0.11
 [0.10]: https://github.com/plandes/choice-program/compare/v0.9...v0.10
