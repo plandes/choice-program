@@ -8,6 +8,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased]
 
 
+### Changed
+- Hardened Cask build.
+- Fixed more compilation and *package-lint* warnings.
+
+
 ## [0.13] - 2020-12-16
 ### Change
 - Build refactoring only: better package-lint automation.

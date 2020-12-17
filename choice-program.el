@@ -7,7 +7,7 @@
 ;; Maintainer: Paul Landes
 ;; Keywords: execution processes unix lisp
 ;; URL: https://github.com/plandes/choice-program
-;; Package-Requires: ((emacs "26") (dash "2.13.0"))
+;; Package-Requires: ((emacs "26") (dash "2.12"))
 
 ;; This file is not part of GNU Emacs.
 
@@ -117,22 +117,35 @@ Whether or not to display the buffer on execution."))
   "Return the name of THIS choice program launcher."
   (slot-value this 'object-name))
 
-(cl-defmethod choice-program-debug ((this choice-program) object)
-  "Add a debugging message for THIS with debug parameter OBJECT."
+(cl-defmethod choice-program-debug ((_ choice-program) object)
+  "Add a debugging message with debug parameter OBJECT."
   (with-current-buffer
       (get-buffer-create "*Option Prog Debug*")
     (goto-char (point-max))
     (insert (format (if (stringp object) "%s" "%S") object))
     (newline)))
 
+(cl-defmethod eieio-object-value-string ((this choice-program) val)
+  "Return a string representation of VAL overriden for THIS.
+This is used for prettyprinting by `eieio-object-name-string'."
+  (cond ((stringp val) val)
+	((consp val) (->> (mapconcat #'(lambda (val)
+					 (eieio-object-value-string this val))
+				     val " ")
+			  (format "(%s)")))
+	(t (prin1-to-string val))))
+
+(cl-defmethod eieio-object-value-slots ((_ choice-program))
+  "Return a list of slot names used in `eieio-object-name-string'."
+  '(selection-args buffer-name))
+
 (cl-defmethod eieio-object-name-string ((this choice-program))
   "Return a string as a representation of the in memory instance of THIS."
-  (->> '(selection-args buffer-name)
-       (-map #'(lambda (slot)
-		 (let ((val (slot-value this slot)))
-		   (cond ((stringp val) val)
-			 (t (prin1-to-string val))))))
-       ((lambda (slots) (mapconcat #'prin1-to-string slots " ")))
+  (->> (mapconcat #'(lambda (slot)
+		      (let ((val (slot-value this slot)))
+			(eieio-object-value-string this val)))
+		  (eieio-object-value-slots this)
+		  " ")
        (concat (cl-call-next-method this) " ")))
 
 (cl-defmethod choice-program-exec-prog ((this choice-program) args
@@ -203,8 +216,7 @@ DRYRUN-P logs like its doing something, but doesn't."
 			  (if dryrun-p (slot-value this 'dryrun-switch-name))
 			  (slot-value this 'verbose-switch-form)
 			  (slot-value this 'choice-switch-name)
-			  choice)))
-	cmd)
+			  choice))))
     (mapconcat #'identity cmd-lst " ")))
 
 (cl-defmethod choice-program-exec ((this choice-program) choice
@@ -219,7 +231,7 @@ DRYRUN-P logs like its doing something, but doesn't."
 	buf)
     (cl-flet ((prog-exec
 	       ()
-	       (compilation-start cmd t #'(lambda (mode)
+	       (compilation-start cmd t #'(lambda (_)
 					    (slot-value this 'buffer-name)))))
       (if (slot-value this 'display-buffer)
 	  (setq buf (prog-exec))
