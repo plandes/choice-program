@@ -7,7 +7,7 @@
 ;; Maintainer: Paul Landes
 ;; Keywords: execution processes unix lisp
 ;; URL: https://github.com/plandes/choice-program
-;; Package-Requires: ((emacs "26") (dash "2.12"))
+;; Package-Requires: ((emacs "26") (dash "2.17.0"))
 
 ;; This file is not part of GNU Emacs.
 
