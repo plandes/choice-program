@@ -8,4 +8,5 @@
 
 (development
  (depends-on "dash")
+ (depends-on "package-lint")
  (depends-on "ert-runner"))
