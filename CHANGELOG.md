@@ -12,6 +12,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Changed
 - Documentation: *package-lint* warning fixes.
+- Rename `choice-program-complete-default-prompt` to fix *package-lint*
+  warning.
 
 
 ## [0.11] - 2020-12-16
