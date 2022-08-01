@@ -240,6 +240,12 @@ DRYRUN-P logs like its doing something, but doesn't."
     (message "Started: %s" cmd)
     buf))
 
+(cl-defmethod choice-program-exec-string ((this choice-program) choice)
+  "Run the program with CHOICE and return the output as a string.
+This is meant to be used programmatically.
+THIS is the instance."
+  (shell-command-to-string (choice-program-command this choice nil)))
+
 (defun choice-program-instances ()
   "Return all `choice-program' instances."
   (mapcar #'symbol-value
