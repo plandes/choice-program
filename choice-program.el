@@ -1,8 +1,8 @@
 ;;; choice-program.el --- Parameter based program  -*- lexical-binding: t; -*-
 
-;; Copyright (C) 2015 - 2020 Paul Landes
+;; Copyright (C) 2015 - 2023 Paul Landes
 
-;; Version: 0.10
+;; Version: 0.14
 ;; Author: Paul Landes
 ;; Maintainer: Paul Landes
 ;; Keywords: execution processes unix lisp
