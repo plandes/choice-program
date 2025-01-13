@@ -8,6 +8,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased]
 
 
+## [0.15] - 2025-01-12
+### Changed
+- Allow choices override in user input read via the
+  `choice-program-read-option` method.  This is useful when looking for valid
+  symbols at the point.
+
+
 ## [0.14] - 2023-08-05
 ### Changed
 - Hardened Cask build.
@@ -86,7 +93,8 @@ This release addresses the following error:
 - Fixed travis build using old (24.3) Emacs version from cask.
 
 
-[Unreleased]: https://github.com/plandes/choice-program/compare/v0.14...HEAD
+[Unreleased]: https://github.com/plandes/choice-program/compare/v0.15...HEAD
+[0.15]: https://github.com/plandes/choice-program/compare/v0.14...v0.15
 [0.14]: https://github.com/plandes/choice-program/compare/v0.13...v0.14
 [0.13]: https://github.com/plandes/choice-program/compare/v0.12...v0.13
 [0.12]: https://github.com/plandes/choice-program/compare/v0.11...v0.12
