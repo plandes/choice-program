@@ -8,9 +8,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased]
 
 
-## [0.16] - 2026-01-02
+## [0.16.0] - 2026-01-02
 ### Changed
 - Switch to major, minor, and debug version format.
+- Fix infinite loop in `cl-prin` when object is unbound slots.
 
 
 ## [0.15] - 2025-01-12

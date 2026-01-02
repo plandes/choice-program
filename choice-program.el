@@ -142,7 +142,9 @@ This is used for prettyprinting by `eieio-object-name-string'."
 (cl-defmethod eieio-object-name-string ((this choice-program))
   "Return a string as a representation of the in memory instance of THIS."
   (->> (mapconcat #'(lambda (slot)
-		      (let ((val (slot-value this slot)))
+		      (let ((val (if (slot-boundp this slot)
+				     (slot-value this slot)
+				   (format "Unbound slot: %S" slot))))
 			(eieio-object-value-string this val)))
 		  (eieio-object-value-slots this)
 		  " ")
