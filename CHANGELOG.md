@@ -8,6 +8,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased]
 
 
+## [0.16] - 2026-01-02
+### Changed
+- Switch to major, minor, and debug version format.
+
+
 ## [0.15] - 2025-01-12
 ### Changed
 - Allow choices override in user input read via the
@@ -93,7 +98,8 @@ This release addresses the following error:
 - Fixed travis build using old (24.3) Emacs version from cask.
 
 
-[Unreleased]: https://github.com/plandes/choice-program/compare/v0.15...HEAD
+[Unreleased]: https://github.com/plandes/choice-program/compare/v0.16...HEAD
+[0.16]: https://github.com/plandes/choice-program/compare/v0.15...v0.16
 [0.15]: https://github.com/plandes/choice-program/compare/v0.14...v0.15
 [0.14]: https://github.com/plandes/choice-program/compare/v0.13...v0.14
 [0.13]: https://github.com/plandes/choice-program/compare/v0.12...v0.13
