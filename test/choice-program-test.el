@@ -36,14 +36,14 @@ perl script.")
   (add-to-list 'exec-path dir))
 
 (ert-deftest test-choice-program-selections ()
-  "Validate mnemonic options"
- (->> synconf-the-instance
-      (choice-program-selections)
-      (equal '("laptop" "usb"))
-      should))
+  "Validate mnemonic options."
+  (->> synconf-the-instance
+       (choice-program-selections)
+       (equal '("laptop" "usb"))
+       should))
 
 (ert-deftest test-choice-prompt ()
-  "Validate prompt"
+  "Validate prompt."
   (should (equal "Test (default def): "
 		 (choice-program-complete-default-prompt "Test" "def"))))
 
