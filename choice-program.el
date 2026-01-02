@@ -54,10 +54,12 @@
 	    :type string
 	    :documentation "The conduit program to run.")
    (interpreter :initarg :interpreter
+		:initform nil
 		:type (or null string)
 		:documentation "The interpreter (i.e. /bin/sh) or nil.")
    (selection-args :initarg :selection-args
-		   :type list
+		   :initform nil
+		   :type (or null string list)
 		   :documentation "List of arguments used to get the options.")
    (choice-prompt :initarg :choice-prompt
 		  :initform "Choice"
@@ -65,10 +67,10 @@
 		  :documentation "Name of the parameter choice list \
 \(i.e. Mmenomic) when used for prompting.  This should always be capitalized.")
    (choice-switch-name :initarg :choice-switch-name
-		       :initform "-o"
-		       :type string
+		       :initform nil
+		       :type (or null string)
 		       :documentation "Name of the parameter switch \
-\(i.e. -m).")
+(i.e. -m).")
    (dryrun-switch-name :initarg :dryrun-switch-name
 		       :initform "-d"
 		       :type string
@@ -135,7 +137,7 @@ This is used for prettyprinting by `eieio-object-name-string'."
 			  (format "(%s)")))
 	(t (prin1-to-string val))))
 
-(cl-defmethod eieio-object-value-slots ((_ choice-program))
+(cl-defmethod eieio-object-value-slots ((_this choice-program))
   "Return a list of slot names used in `eieio-object-name-string'."
   '(selection-args buffer-name))
 
@@ -181,7 +183,8 @@ NO-TRIM-P, if non-nil, don't remove the terminating from the program's output."
 (cl-defmethod choice-program-selections ((this choice-program))
   "Return a list of possibilities for mnemonics for this program.
 THIS is the instance"
-  (let ((output (choice-program-exec-prog this (slot-value this 'selection-args))))
+  (let ((output (->> (slot-value this 'selection-args)
+		     (choice-program-exec-prog this))))
     (split-string output "\n")))
 
 (cl-defmethod choice-program-read-option ((this choice-program)
