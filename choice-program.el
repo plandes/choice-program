@@ -97,12 +97,25 @@ documentation.")
 		   :initform (gensym "choice-program-prompt-history")
 		   :type symbol
 		   :documentation "History variable used for user prompts.")
-   (display-buffer :initarg :display-buffer
-		   :initform t
-		   :type boolean
-		   :documentation "\
-Whether or not to display the buffer on execution."))
-  :documentation "Represents a single `actionable' program instance.")
+   (display-buffer-p :initarg :display-buffer-p
+		     :initform t
+		     :type boolean
+		     :documentation "\
+Whether or not to display the buffer on execution.")
+   (kill-buffer-p :initarg :kill-buffer-p
+		  :initform nil
+		  :type boolean
+		  :documentation "Kill the buffer on success.")
+   (restore-windows-p :initarg :restore-windows-p
+		      :initform nil
+		      :type boolean
+		      :documentation "Restore window positions on success."))
+  :documentation
+  "Represents a single `actionable' program instance.
+
+Overridable methods:
+- `choice-program--start': call backs for starting the program
+- `choice-program--finish': call backs for ending the program")
 
 (cl-defmethod initialize-instance ((this choice-program) &optional slots)
   "Initialize instance THIS with arguments SLOTS."
@@ -210,48 +223,102 @@ CHOICES is the list of choices in place of getting it from the program."
 
 (cl-defmethod choice-program-command ((this choice-program)
 				      choice &optional dryrun-p)
-  "Create the command used to execute the command.
+  "Create the command used to execute the command as a list of arguments.
 THIS is the instance.
 CHOICE is the mnemonic choice, usually called the `action'.
 DRYRUN-P logs like its doing something, but doesn't."
-  (let ((cmd-lst (remove nil
-			 (list
-			  (and (slot-value this 'interpreter)
-			       (executable-find (slot-value this 'interpreter)))
-			  (and (slot-value this 'program)
-			       (executable-find (slot-value this 'program)))
-			  (if dryrun-p (slot-value this 'dryrun-switch-name))
-			  (slot-value this 'verbose-switch-form)
-			  (slot-value this 'choice-switch-name)
-			  choice))))
-    (mapconcat #'identity cmd-lst " ")))
+  (unless (consp choice)
+    (setq choice (list choice)))
+  (with-slots (interpreter program verbose-switch-form choice-switch-name) this
+    (->> (list (and interpreter (executable-find interpreter))
+	       (and program (or (executable-find program) program))
+	       (if dryrun-p (slot-value this 'dryrun-switch-name))
+	       verbose-switch-form
+	       choice-switch-name)
+	 (funcall (lambda (args)
+		    (append args choice)))
+	 (remove nil))))
 
-(cl-defmethod choice-program-exec ((this choice-program) choice
-				   &optional dryrun-p)
+(cl-defmethod choice-program--start ((_this choice-program) args)
+  "Called when THIS begins the program with argument ARGS."
+  (insert (format "$ %s\n\n" (mapconcat #'identity args " "))))
+
+(cl-defmethod choice-program--finish ((_this choice-program) args proc)
+  "Called when THIS has completed called with ARGS with ending process PROC."
+  (let ((exit (process-exit-status proc)))
+    (message (format "%s \"%s\""
+		     (if (= exit 0)
+			 "Success"
+		       (format "Fail (%d) exit" exit))
+		     (mapconcat #'identity args " ")))))
+
+(cl-defmethod choice-program-exec ((this choice-program)
+				   &optional choice dryrun-p)
   "Run the program with a particular choice, which is prompted by the user.
 This should be called by an interactive function, or by the function created by
 the `choice-program-create-exec-function' method.
 THIS is the instance.
-CHOICE is the choice to use for the execution.
+CHOICE is the choice to run the program, or the choice + arguments if a list.
 DRYRUN-P logs like its doing something, but doesn't."
-  (let ((cmd (choice-program-command this choice dryrun-p))
-	buf)
-    (cl-flet ((prog-exec
-	       ()
-	       (compilation-start cmd t #'(lambda (_)
-					    (slot-value this 'buffer-name)))))
-      (if (slot-value this 'display-buffer)
-	  (setq buf (prog-exec))
-	(save-window-excursion
-	  (setq buf (prog-exec)))))
-    (message "Started: %s" cmd)
-    buf))
+  (let ((args (choice-program-command this choice dryrun-p)))
+    (unless (and (listp args) (stringp (car args)))
+      (error "ARGS must be a list whose first element is the program string"))
+    (with-slots (buffer-name display-buffer-p kill-buffer-p restore-windows-p)
+	this
+      (let ((buf (get-buffer-create buffer-name))
+	    (winconf (current-window-configuration)))
+	(with-current-buffer buf
+	  (setq buffer-read-only nil)
+	  (erase-buffer)
+	  (choice-program--start this args)
+	  ;(setq-local cursor-type nil)
+	  (local-set-key (kbd "q") #'quit-window))
+	(when display-buffer-p
+	  (display-buffer buf))
+	(let ((proc
+               (make-process
+		:name buffer-name
+		:buffer buf
+		:command args
+		:noquery t
+		:filter
+		(lambda (p chunk)
+		  (when (buffer-live-p (process-buffer p))
+		    (with-current-buffer (process-buffer p)
+		      (let ((inhibit-read-only t))
+			(goto-char (point-max))
+			(insert chunk)))))
+		:sentinel
+		(lambda (p _event)
+		  (when (memq (process-status p) '(exit signal))
+		    (choice-program--finish this args p)
+		    (let ((b (process-buffer p)))
+		      (if (and (eq (process-status p) 'exit)
+				 (zerop (process-exit-status p)))
+			;; success: restore windows and remove buffer
+			(progn
+			  (when (and restore-windows-p
+				     (window-configuration-p winconf))
+			    (set-window-configuration winconf))
+			  (when (buffer-live-p b)
+			    (if kill-buffer-p
+				(kill-buffer b)
+			      (with-current-buffer b
+				(read-only-mode 1)))))
+			(unless display-buffer-p
+			  (display-buffer buf)))))))))
+	  proc)))))
 
-(cl-defmethod choice-program-exec-string ((this choice-program) choice)
+(cl-defmethod choice-program-exec-string ((this choice-program)
+					  &optional choice dryrun-p)
   "Run the program with CHOICE and return the output as a string.
 This is meant to be used programmatically.
-THIS is the instance."
-  (shell-command-to-string (choice-program-command this choice nil)))
+THIS is the instance.
+DRYRUN-P logs like its doing something, but doesn't."
+  (->> (choice-program-command this choice dryrun-p)
+       (funcall (lambda (arg)
+		  (mapconcat #'identity arg " ")))
+       shell-command-to-string))
 
 (defun choice-program-instances ()
   "Return all `choice-program' instances."
@@ -272,7 +339,7 @@ would do if it were to be run.  This adds the `%s' option to the command line."
 			     (slot-value this 'choice-switch-name)
 			     (slot-value this 'dryrun-switch-name))))
     (let ((def
-	   `(defun ,name (choice dryrun-p)
+	   `(defun ,name (&optional choice dryrun-p)
 	      ,(if (slot-value this 'documentation)
 		   (concat (slot-value this 'documentation) "\n\n" option-doc))
 	      (interactive (list (choice-program-read-option ,instance-var)

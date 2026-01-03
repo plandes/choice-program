@@ -21,7 +21,6 @@
 		  :interpreter "/bin/sh"
 		  :buffer-name "*Synchronized Output*"
 		  :choice-prompt "Mnemonic"
-		  :choice-switch-name ""
 		  :selection-args '("-a" "listmnemonics")
 		  :documentation
 "Run a synchronize command.  The command is issued with the `synconf'
@@ -54,11 +53,12 @@ perl script.")
   "Validate prompt."
   (choice-program-test-setup)
   (let ((this synconf-the-instance))
-    (choice-program-exec this "-a listmnemonics")
+    (choice-program-exec this (split-string "-a listmnemonics"))
     (sit-for 0.2)
     (let ((output (with-current-buffer
 		      (get-buffer (slot-value this 'buffer-name))
 		    (buffer-substring-no-properties (point-min) (point-max)))))
+      (message output)
       (should (string-search "laptop" output))
       (should (string-search "usb" output)))))
 

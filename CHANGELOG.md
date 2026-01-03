@@ -12,6 +12,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Changed
 - Switch to major, minor, and debug version format.
 - Fix infinite loop in `cl-prin` when object is unbound slots.
+- Rename `choice-program` slot `display-buffer` to `display-buffer-p`.
+- Added a `choice-program` slot `kill-buffer-p` to kill a buffer after
+  finishing successfully.
+- Added `restore-windows-p` to restore window configuration after finishing
+  successfully.
+- The `choice` argument can now take a list of arguments.
 
 
 ## [0.15] - 2025-01-12
