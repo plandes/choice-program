@@ -53,7 +53,7 @@ An extensive changelog is available [here](CHANGELOG.md).
 
 ## License
 
-Copyright © 2017 Paul Landes
+Copyright © 2017 - 2026 Paul Landes
 
 GNU Lesser General Public License, Version 2.0
 
