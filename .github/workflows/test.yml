@@ -31,7 +31,8 @@ jobs:
       # Install Cask deterministically (no deprecated installer; no action that runs cask internally).
       - name: Install Cask (clone)
         run: |
-          git clone --depth 1 https://github.com/cask/cask ~/.cask
+          git clone https://github.com/cask/cask ~/.cask
+          git -C ~/.cask checkout c2d79d3
           echo "$HOME/.cask/bin" >> $GITHUB_PATH
 
       # Patch Cask so legacy EIEIO macros (defmethod/defgeneric) exist under Emacs 29+
