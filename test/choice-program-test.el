@@ -58,7 +58,6 @@ perl script.")
     (let ((output (with-current-buffer
 		      (get-buffer (slot-value this 'buffer-name))
 		    (buffer-substring-no-properties (point-min) (point-max)))))
-      (message output)
       (should (string-search "laptop" output))
       (should (string-search "usb" output)))))
 
