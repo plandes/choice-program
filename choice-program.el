@@ -167,7 +167,9 @@ This is used for prettyprinting by `eieio-object-name-string'."
 
 (cl-defmethod choice-program-exec-prog ((this choice-program) args
 					&optional no-trim-p)
-  "Execute the program defined in THIS with ARGS and return the output.
+  "Execute the program to get the action mnemonics (a.k.a. choices) for THIS.
+
+ARGS the arguments sent to the program for execution.
 NO-TRIM-P, if non-nil, don't remove the terminating from the program's output."
   (with-output-to-string
     (with-current-buffer
@@ -223,8 +225,8 @@ CHOICES is the list of choices in place of getting it from the program."
 
 (cl-defmethod choice-program-command ((this choice-program)
 				      choice &optional dryrun-p)
-  "Create the command used to execute the command as a list of arguments.
-THIS is the instance.
+  "Create the command line as a list of arguments for THIS innstance.
+
 CHOICE is the mnemonic choice, usually called the `action'.
 DRYRUN-P logs like its doing something, but doesn't."
   (unless (consp choice)
@@ -254,10 +256,10 @@ DRYRUN-P logs like its doing something, but doesn't."
 
 (cl-defmethod choice-program-exec ((this choice-program)
 				   &optional choice dryrun-p)
-  "Run the program with a particular choice, which is prompted by the user.
+  "Run the program with a choice on THIS prompted by the user.
 This should be called by an interactive function, or by the function created by
 the `choice-program-create-exec-function' method.
-THIS is the instance.
+
 CHOICE is the choice to run the program, or the choice + arguments if a list.
 DRYRUN-P logs like its doing something, but doesn't."
   (let ((args (choice-program-command this choice dryrun-p)))
@@ -311,9 +313,9 @@ DRYRUN-P logs like its doing something, but doesn't."
 
 (cl-defmethod choice-program-exec-string ((this choice-program)
 					  &optional choice dryrun-p)
-  "Run the program with CHOICE and return the output as a string.
+  "Run THIS program with action CHOICE and return the output as a string.
+
 This is meant to be used programmatically.
-THIS is the instance.
 DRYRUN-P logs like its doing something, but doesn't."
   (->> (choice-program-command this choice dryrun-p)
        (funcall (lambda (arg)
@@ -327,6 +329,7 @@ DRYRUN-P logs like its doing something, but doesn't."
 
 (defun choice-program-create-exec-function (instance-var)
   "Create functions for a `choice-program' instance.
+
 INSTANCE-VAR is an instance of the `choice-program' eieio class.
 NAME overrides the `:program' slot if given."
   (let* ((this (symbol-value instance-var))
