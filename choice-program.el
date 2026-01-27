@@ -229,8 +229,8 @@ CHOICES is the list of choices in place of getting it from the program."
 
 CHOICE is the mnemonic choice, usually called the `action'.
 DRYRUN-P logs like its doing something, but doesn't."
-  (unless (consp choice)
-    (setq choice (list choice)))
+  (when (stringp choice)
+    (setq choice (string-split choice)))
   (with-slots (interpreter program verbose-switch-form choice-switch-name) this
     (->> (list (and interpreter (executable-find interpreter))
 	       (and program (or (executable-find program) program))
